@@ -1,0 +1,27 @@
+FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-devel
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
+
+RUN apt-get update && apt-get install build-essential -y --no-install-recommends gcc
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 git -y
+
+RUN pip install --upgrade pip
+RUN pip install numpy tqdm yml docopt wandb torchmetrics easydict pyyaml opencv-python
+
+WORKDIR /app
+
+#RUN git clone 'https://github.com/facebookresearch/detectron2' && \
+#    cd /app/detectron2 && pip install -r requirements.txt 
+RUN python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
+ARG USER_ID
+ARG USERNAME=appuser
+
+RUN adduser --uid $USER_ID --disabled-password --gecos "" $USERNAME && chown -R $USERNAME /app
+USER $USERNAME

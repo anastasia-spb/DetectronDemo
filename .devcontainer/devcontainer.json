@@ -1,0 +1,18 @@
+{
+    "name": "detectron2",
+    "build": {
+        "dockerfile": "Dockerfile.dev",
+        "context": "..",
+        "args": { "USER_ID": "1004" }
+    },
+    "remoteUser": "appuser",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance"
+            ]
+        }
+    },
+    "runArgs": ["--gpus", "all", "--shm-size", "32G", "-e", "WANDB_API_KEY=78cbaef6070e9d913b002ecad99540fc3eb41c91"]
+  }

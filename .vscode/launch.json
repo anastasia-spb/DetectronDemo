@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "launch_detectron2",
+            "type": "python",
+            "request": "launch",
+            "program": "/workspaces/detectron/hyena_dataset.py"
+        }
+    ]
+}
